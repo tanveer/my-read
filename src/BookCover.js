@@ -5,7 +5,9 @@ const BookCover = ({ imageLinks }) => {
       style={{
         width: 130,
         height: 200,
-        backgroundImage: `url(${imageLinks.thumbnail})`,
+        backgroundImage: `url(${
+          imageLinks.thumbnail ? imageLinks.thumbnail : ""
+        })`,
       }}
     ></div>
   );

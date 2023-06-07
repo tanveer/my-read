@@ -12,7 +12,11 @@ const BookShelf = (props) => {
             {books.map(
               (book) =>
                 book.shelf === shelf && (
-                  <Book book={book} handleShelfUpdate={handleShelfUpdate} />
+                  <Book
+                    book={book}
+                    handleShelfUpdate={handleShelfUpdate}
+                    key={book.id}
+                  />
                 )
             )}
           </ol>

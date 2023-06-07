@@ -26,8 +26,19 @@ function App() {
 
   const searchBookTitle = async (e) => {
     e.preventDefault();
-    const res = await search(e.target.value, 10);
-    if (res.length) setSearchedBook(res);
+    if (e.target.value.trim()) {
+      const res = await search(e.target.value, 10);
+      if (res.error === "empty query" || e.target.value.trim() === "") {
+        setSearchedBook([]);
+        return;
+      }
+      const filter = res.filter(
+        (r) => r.imageLinks !== undefined && r.authors !== undefined
+      );
+      if (filter.length) setSearchedBook(filter);
+    } else {
+      setSearchedBook([]);
+    }
   };
 
   return (
