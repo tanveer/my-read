@@ -2,7 +2,10 @@ import "./App.css";
 import { useState, useEffect } from "react";
 import BookShelf from "./BookShelf";
 import { getAll, update, search } from "./BooksAPI";
+import { Routes, Route, Link } from "react-router-dom";
 import Book from "./Book";
+import SearchPage from "./SearchPage";
+import MainPage from "./MainPage";
 
 function App() {
   const [showSearchPage, setShowSearchpage] = useState(false);
@@ -43,62 +46,24 @@ function App() {
 
   return (
     <div className="app">
-      {showSearchPage ? (
-        <div className="search-books">
-          <div className="search-books-bar">
-            <a
-              className="close-search"
-              onClick={() => setShowSearchpage(!showSearchPage)}
-            >
-              Close
-            </a>
-            <div className="search-books-input-wrapper">
-              <input
-                type="text"
-                placeholder="Search by title, author, or ISBN"
-                onChange={searchBookTitle}
-              />
-            </div>
-          </div>
-          <div className="search-books-results">
-            <ol className="books-grid">
-              {searchedBooks &&
-                searchedBooks.map((book) => (
-                  <Book book={book} handleShelfUpdate={handleShelfUpdate} />
-                ))}
-            </ol>
-          </div>
-        </div>
-      ) : (
-        <div className="list-books">
-          <div className="list-books-title">
-            <h1>MyReads</h1>
-          </div>
-          <div className="list-books-content">
-            <BookShelf
-              books={books}
-              shelf={"currentlyReading"}
-              title={"Currently Reading"}
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <MainPage books={books} handleShelfUpdate={handleShelfUpdate} />
+          }
+        />
+        <Route
+          path="/search"
+          element={
+            <SearchPage
+              searchBookTitle={searchBookTitle}
               handleShelfUpdate={handleShelfUpdate}
+              searchedBooks={searchedBooks}
             />
-            <BookShelf
-              books={books}
-              shelf={"wantToRead"}
-              title={"Want to Read"}
-              handleShelfUpdate={handleShelfUpdate}
-            />
-            <BookShelf
-              books={books}
-              shelf={"read"}
-              title={"Read"}
-              handleShelfUpdate={handleShelfUpdate}
-            />
-          </div>
-          <div className="open-search">
-            <a onClick={() => setShowSearchpage(!showSearchPage)}>Add a book</a>
-          </div>
-        </div>
-      )}
+          }
+        />
+      </Routes>
     </div>
   );
 }
