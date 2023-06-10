@@ -1,8 +1,16 @@
-This is a Udacity My-Read project
-to run the project locally clone this repo
-run 'npm install'
-run 'npm start' to run the project locally on port 3000 'localhost:3000'
+# My Read
+### Udacity project from React Nanodegree
+This book reading app supports 3 sheves 
+- Currently Reading
+- Want to Read
+- Read
 
-books can be selected to move onto diffrent shelf
-new books can be added to shelf by searching and selecting shelf of choice
-to discard a book select the option 'None' from shelf selection
+Users have the ability to search and add books to the desired shelf, each shelf can be updated and books can be moved between shelves.
+This project is build by consuming an backend api to fetch, search and updates books using React and React Router
+
+## Install
+After downloading or cloning this app run following commands in terminal to get it up and running.
+- `npm install`
+- `npm start`
+
+Open the browser and go to `localhost:3000` to see the app in action.
