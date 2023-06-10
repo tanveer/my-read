@@ -27,6 +27,25 @@ function App() {
     fetchBooks();
   };
 
+  const removeBookAlreadyOnShelf = (filteredBooks, e) => {
+    //remove books that don't match the query string
+    const newBooks = filteredBooks.filter((book) =>
+      book.title.toLowerCase().includes(e.target.value.trim())
+    );
+
+    const filterBooksAlreadyOnShelf = newBooks.filter((book, index, self) => {
+      if (!book.hasOwnProperty("shelf")) {
+        const hasDuplicateWithShelf = self.some(
+          (b) => b.id === book.id && b.hasOwnProperty("shelf")
+        );
+        return !hasDuplicateWithShelf;
+      } else {
+        return true;
+      }
+    });
+    return filterBooksAlreadyOnShelf;
+  };
+
   const searchBookTitle = async (e) => {
     e.preventDefault();
     if (e.target.value.trim()) {
@@ -35,10 +54,20 @@ function App() {
         setSearchedBook([]);
         return;
       }
-      const filter = res.filter(
+      const filteredBooks = res.filter(
         (r) => r.imageLinks !== undefined && r.authors !== undefined
       );
-      if (filter.length) setSearchedBook(filter);
+
+      // merged both current books and searched books
+      filteredBooks.push(...books);
+
+      // filter books already on he shelf fro the merged array based on 'shelf' property
+      // since the newlly searched books has no property called 'shelf' we can filter it out.
+      const filterBooksAlreadyOnShelf = removeBookAlreadyOnShelf(
+        filteredBooks,
+        e
+      );
+      setSearchedBook(filterBooksAlreadyOnShelf);
     } else {
       setSearchedBook([]);
     }
@@ -60,6 +89,7 @@ function App() {
               searchBookTitle={searchBookTitle}
               handleShelfUpdate={handleShelfUpdate}
               searchedBooks={searchedBooks}
+              books={books}
             />
           }
         />

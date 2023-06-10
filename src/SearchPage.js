@@ -2,7 +2,18 @@ import Book from "./Book";
 import { Link } from "react-router-dom";
 
 const SearchPage = (props) => {
-  const { searchBookTitle, handleShelfUpdate, searchedBooks } = props;
+  const { searchBookTitle, handleShelfUpdate, searchedBooks, books } = props;
+
+  //   searchedBooks.push(...books);
+
+  //   const filteredBooks = searchedBooks.filter((book) => {
+  //     if (book.shelf === "none") {
+  //       return !searchedBooks.some(
+  //         (otherBook) => book.id === otherBook.id && book.shelf !== "none"
+  //       );
+  //     }
+  //     return true;
+  //   });
 
   return (
     <div className="search-books">
@@ -22,7 +33,11 @@ const SearchPage = (props) => {
         <ol className="books-grid">
           {searchedBooks &&
             searchedBooks.map((book) => (
-              <Book book={book} handleShelfUpdate={handleShelfUpdate} />
+              <Book
+                book={book}
+                handleShelfUpdate={handleShelfUpdate}
+                key={book.id}
+              />
             ))}
         </ol>
       </div>

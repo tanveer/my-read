@@ -1,12 +1,12 @@
 const ShelfSelection = (props) => {
-  const { book, handleShelfUpdate } = props;
+  const { shelf, book, handleShelfUpdate } = props;
   const handleUpdate = (e) => {
     handleShelfUpdate(book, e.target.value);
   };
 
   return (
     <div className="book-shelf-changer">
-      <select value={book.shelf} onChange={handleUpdate}>
+      <select onChange={handleUpdate} value={book.shelf ? book.shelf : "none"}>
         <option value={"move"} disabled>
           Move to...
         </option>

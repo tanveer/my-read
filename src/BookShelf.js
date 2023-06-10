@@ -13,6 +13,7 @@ const BookShelf = (props) => {
               (book) =>
                 book.shelf === shelf && (
                   <Book
+                    shelf={shelf}
                     book={book}
                     handleShelfUpdate={handleShelfUpdate}
                     key={book.id}
